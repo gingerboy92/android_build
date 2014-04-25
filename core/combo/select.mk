@@ -57,10 +57,10 @@ endif
 $(combo_target)GLOBAL_CFLAGS := -fno-exceptions -Wno-multichar
 ifeq ($(TARGET_USE_03),true)
 $(combo_target)RELEASE_CFLAGS := -O3 -g -fno-tree-vectorize -fno-inline-functions -fno-unswitch-loops
-$(combo_target)GLOBAL_LDFLAGS :=
+$(combo_target)GLOBAL_LDFLAGS := -Wl,-O2 -Wl,--sort-common -s
 else
 $(combo_target)RELEASE_CFLAGS := -Os -g
-$(combo_target)GLOBAL_LDFLAGS :=
+$(combo_target)GLOBAL_LDFLAGS := -Wl,-O2 -Wl,--sort-common -s
 endif
 
 ifeq ($(strip $(STRICT_ALIASING)),true)
