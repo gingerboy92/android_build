@@ -122,12 +122,19 @@ KERNEL_HEADERS_INSTALL := $(KERNEL_OUT)/usr
 KERNEL_MODULES_INSTALL := system
 KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
 
+    ifneq ($(TARGET_KERNEL_CUSTOM_TOOLCHAIN),)
+        MODULE_STRIP_TOOLCHAIN := "$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)strip"
+    else
+        MODULE_STRIP_TOOLCHAIN := "$(ARM_EABI_TOOLCHAIN)"
+    endif
+
 define mv-modules
     mdpath=`find $(KERNEL_MODULES_OUT) -type f -name modules.order`;\
     if [ "$$mdpath" != "" ];then\
         mpath=`dirname $$mdpath`;\
         ko=`find $$mpath/kernel -type f -name *.ko`;\
-        for i in $$ko; do mv $$i $(KERNEL_MODULES_OUT)/; done;\
+        for i in $$ko; do $(MODULE_STRIP_TOOLCHAIN) --strip-unneeded $$i;\
+        mv $$i $(KERNEL_MODULES_OUT)/; done;\
     fi
 endef
 
