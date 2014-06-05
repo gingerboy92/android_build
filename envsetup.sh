@@ -678,7 +678,7 @@ function installboot()
     sleep 1
     adb wait-for-device shell mount /system 2>&1 > /dev/null
     adb wait-for-device remount
-    if (adb shell cat /system/build.prop | grep -q "ro.omni.device=$OMNI_BUILD");
+    if (adb shell cat /system/build.prop | grep -q "ro.product.device=$SLIM_BUILD");
     then
         adb push $OUT/boot.img /cache/
         for i in $OUT/system/lib/modules/*;
@@ -694,7 +694,7 @@ function installboot()
         adb shell chmod 644 /system/lib/modules/*
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $OMNI_BUILD, run away!"
+        echo "The connected device does not appear to be $SLIM_BUILD, run away!"
     fi
 }
 
@@ -729,13 +729,13 @@ function installrecovery()
     adb wait-for-device shell mount /system 2>&1 >> /dev/null
     adb wait-for-device
     adb remount
-    if (adb shell cat /system/build.prop | grep -q "ro.omni.device=$OMNI_BUILD");
+    if (adb shell cat /system/build.prop | grep -q "ro.product.device=$SLIM_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $OMNI_BUILD, run away!"
+        echo "The connected device does not appear to be $SLIM_BUILD, run away!"
     fi
 }
 
