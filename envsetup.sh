@@ -1319,6 +1319,11 @@ function tracedmdump()
     echo "    traceview $TRACE/dmtrace"
 }
 
+function gethostccache
+{
+    echo $(which ccache)
+}
+
 # communicate with a running device or emulator, set up necessary state,
 # and run the hat command.
 function runhat()

@@ -160,7 +160,7 @@ ifeq ($(TARGET_ARCH),arm)
       endif
     else
     # use HOST ccache
-      ccache := $(shell which ccache)
+      ccache := $(gethostccache)
     endif 
     ifneq ($(TARGET_KERNEL_CUSTOM_TOOLCHAIN),)
         ifeq ($(HOST_OS),darwin)
